@@ -1,0 +1,148 @@
+/* Import Google Font 'Poppins' */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+:root {
+  --sec-fourhome-bg-color: #f4f7f9;
+  --sec-fourhome-text-color: #2c3e50;
+  --sec-fourhome-accent-color: #ff6b6b;
+  --sec-fourhome-accent-dark: #e63946;
+  --sec-fourhome-font: 'Poppins', sans-serif;
+}
+
+#sec-fourhome-section {
+  width: 100%;
+  padding: 140px 0;
+  position: relative;
+  background-color: var(--sec-fourhome-bg-color);
+  color: var(--sec-fourhome-text-color);
+  clip-path: url(#sec-fourhome-brush-path);
+  
+  /* The animated texture background */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23dce4e9' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 -70 461.1 110 314 351 297 500 216 560 216'/%3E%3C/g%3E%3C/svg%3E");
+    animation: sec-fourhome-pan-texture 80s linear infinite;
+  }
+}
+
+#sec-fourhome-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* --- Left Column: Content --- */
+#sec-fourhome-content {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: sec-fourhome-fade-up 1s ease-out 0.2s forwards;
+}
+
+#sec-fourhome-title {
+  font-family: var(--sec-fourhome-font);
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  min-height: 100px; /* Space for the scramble effect */
+}
+
+#sec-fourhome-description {
+  font-family: var(--sec-fourhome-font);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #576c81;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.sec-fourhome-highlight {
+  color: var(--sec-fourhome-accent-dark);
+  font-weight: 700;
+}
+
+#sec-fourhome-cta-button {
+  display: inline-block;
+  font-family: var(--sec-fourhome-font);
+  font-size: 1rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--sec-fourhome-accent-dark), var(--sec-fourhome-accent-color));
+  color: white;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#sec-fourhome-cta-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+}
+
+/* --- Right Column: The Interactive Vector --- */
+#sec-fourhome-visuals {
+  position: relative;
+  perspective: 1500px;
+}
+#sec-fourhome-vector-container {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: rotateX(var(--sec-fourhome-rotate-x, 0)) rotateY(var(--sec-fourhome-rotate-y, 0));
+}
+.sec-fourhome-parallax-layer1, .sec-fourhome-parallax-layer2, .sec-fourhome-parallax-layer3 {
+  transition: transform 0.4s ease-out;
+}
+.sec-fourhome-parallax-layer1 { transform: translate(var(--sec-fourhome-mouse-x), var(--sec-fourhome-mouse-y)); }
+.sec-fourhome-parallax-layer2 { transform: translate(calc(var(--sec-fourhome-mouse-x) * 0.6), calc(var(--sec-fourhome-mouse-y) * 0.6)); }
+.sec-fourhome-parallax-layer3 { transform: translate(calc(var(--sec-fourhome-mouse-x) * 0.3), calc(var(--sec-fourhome-mouse-y) * 0.3)); }
+
+/* --- Individual Vector Element Animations --- */
+.sec-fourhome-swoosh {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: sec-fourhome-draw-line 5s ease-in-out infinite alternate;
+}
+.sec-fourhome-pulsing-ring {
+  animation: sec-fourhome-pulse 4s ease-in-out infinite;
+  transform-origin: center;
+}
+.sec-fourhome-floating-arrow {
+  animation: sec-fourhome-float 6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes sec-fourhome-pan-texture { from { transform: translate(0, 0); } to { transform: translate(-50%, -50%); } }
+@keyframes sec-fourhome-fade-up { to { opacity: 1; transform: translateY(0); } }
+@keyframes sec-fourhome-draw-line {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes sec-fourhome-pulse {
+  50% { transform: scale(0.95); stroke-opacity: 0.5; }
+}
+@keyframes sec-fourhome-float {
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+  #sec-fourhome-container { grid-template-columns: 1fr; }
+  #sec-fourhome-content { text-align: center; }
+  #sec-fourhome-description { margin-left: auto; margin-right: auto; }
+  #sec-fourhome-visuals { margin-top: 60px; }
+}
+
+@media (max-width: 600px) {
+  #sec-fourhome-section { padding: 100px 0; }
+  #sec-fourhome-title { font-size: 2.5rem; min-height: 80px; }
+  #sec-fourhome-description { font-size: 1rem; }
+  #sec-fourhome-visuals {
+    transform: scale(0.8);
+    margin-top: 20px;
+  }
+}

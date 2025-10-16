@@ -1,0 +1,177 @@
+/* Using the same fonts for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+
+:root {
+  --home-services-bg-color: #f9f6f1;
+  --home-services-text-color: #2c2c2c;
+  --home-services-accent-color: #bfa181;
+  --home-services-heading-font: 'Playfair Display', serif;
+  --home-services-body-font: 'Lato', sans-serif;
+}
+
+#home-services-section {
+  width: 100%;
+  padding: 120px 5%;
+  background-color: var(--home-services-bg-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23d3c5b5' fill-opacity='0.05'%3E%3Cpath fill-rule='evenodd' d='M58 6c-13 0-13 11-13 11s0 11 13 11 13-11 13-11S71 6 58 6zM24 6C11 6 11 17 11 17s0 11 13 11 13-11 13-11S37 6 24 6zm56 56c-13 0-13 11-13 11s0 11 13 11 13-11 13-11-13-11-13-11zm-56 0c-13 0-13 11-13 11s0 11 13 11 13-11 13-11-13-11-13-11z'/%3E%3C/g%3E%3C/svg%3E");
+  overflow: hidden;
+}
+
+#home-services-container { max-width: 1400px; margin: 0 auto; text-align: center; }
+#home-services-header { margin-bottom: 80px; }
+.home-services-subtitle {
+  font-family: var(--home-services-body-font); font-weight: 700; color: var(--home-services-accent-color);
+  letter-spacing: 2px; font-size: 0.9rem;
+}
+.home-services-decorator {
+  width: 50px; height: 2px; background-color: var(--home-services-accent-color);
+  margin: 10px auto 20px auto;
+}
+.home-services-title {
+  font-family: var(--home-services-heading-font); font-size: 3.5rem; color: var(--home-services-text-color);
+  line-height: 1.2; margin-bottom: 25px;
+}
+.home-services-description {
+  font-family: var(--home-services-body-font); font-size: 1rem; line-height: 1.8;
+  color: #555; max-width: 600px; margin: 0 auto;
+}
+
+/* --- The Grid & Card Wrapper for Layout and Animation --- */
+#home-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px 40px;
+  /* NEW: Enable 3D perspective for the tilt effect */
+  perspective: 1500px;
+}
+.home-services-card-wrapper {
+  opacity: 0;
+  animation: cardReveal 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation-delay: calc(0.15s * var(--delay));
+}
+.home-services-card-wrapper:nth-child(3n-1) { margin-top: 80px; }
+
+/* --- The Main Card Structure & Hover Effect --- */
+.home-services-card {
+  position: relative;
+  height: 420px;
+  border-radius: 16px; /* Slightly more pronounced radius */
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.05);
+  /* NEW: Enable 3D transforms for children */
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1), box-shadow 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.home-services-card:hover {
+  /* NEW: The stunning 3D tilt effect */
+  transform: rotateX(8deg) rotateY(-5deg) scale(1.05);
+  box-shadow: 0 35px 60px rgba(191, 161, 129, 0.3);
+}
+
+/* --- NEW: The sweeping glare effect --- */
+.home-services-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: left 0.8s ease;
+  z-index: 2;
+}
+.home-services-card:hover::after {
+  left: 110%; /* Sweep across the card */
+}
+
+.home-services-image {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.home-services-card:hover .home-services-image {
+  transform: scale(1.2);
+}
+
+/* --- NEW: The "Wipe Reveal" Glass Panel --- */
+.home-services-hover-panel {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%; /* Occupy bottom 60% of the card */
+  padding: 30px;
+  box-sizing: border-box;
+  color: var(--home-services-text-color);
+  
+  /* The Glassmorphism Effect */
+  background: rgba(249, 246, 241, 0.7);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+  
+  /* The "Wipe Reveal" Animation */
+  clip-path: inset(100% 0 0 0);
+  transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.home-services-card:hover .home-services-hover-panel {
+  clip-path: inset(0 0 0 0);
+}
+.home-services-hover-title {
+  font-family: var(--home-services-heading-font);
+  font-size: 1.5rem;
+  margin: 0 0 10px 0;
+  text-align: left;
+  /* Cascading text animation */
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s;
+}
+.home-services-hover-description {
+  font-family: var(--home-services-body-font);
+  font-size: 0.95rem; line-height: 1.7;
+  margin: 0; text-align: left;
+  /* Cascading text animation */
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s;
+}
+.home-services-card:hover .home-services-hover-title,
+.home-services-card:hover .home-services-hover-description {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* --- Card Title Below the Image --- */
+.home-services-card-title {
+  font-family: var(--home-services-heading-font); font-size: 1.8rem;
+  color: var(--home-services-text-color); margin-top: 25px;
+  transition: color 0.4s ease, letter-spacing 0.4s ease;
+}
+.home-services-card-wrapper:hover .home-services-card-title {
+  color: var(--home-services-accent-color);
+  letter-spacing: 1px;
+}
+
+/* --- Animations & Responsive Design --- */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(60px) rotateX(-10deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+
+@media (max-width: 992px) {
+  #home-services-grid { grid-template-columns: repeat(2, 1fr); }
+  .home-services-card-wrapper:nth-child(3n-1) { margin-top: 0; }
+  .home-services-card-wrapper:nth-child(2n) { margin-top: 80px; }
+}
+
+@media (max-width: 600px) {
+  #home-services-header { margin-bottom: 40px; }
+  .home-services-title { font-size: 2.5rem; }
+  #home-services-grid { grid-template-columns: 1fr; }
+  .home-services-card-wrapper:nth-child(n) { margin-top: 0; }
+  .home-services-card { height: 400px; }
+  /* Make 3D effect less pronounced on mobile */
+  .home-services-card:hover { transform: translateY(-10px) scale(1.03); }
+}

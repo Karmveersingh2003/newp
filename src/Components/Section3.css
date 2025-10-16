@@ -1,0 +1,197 @@
+/* Import Google Font 'Poppins' */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --six-section-bg-color: #f8f9fa; /* Very light gray */
+  --six-section-text-color: #212529; /* Near black for high contrast */
+  --six-section-primary-color: #007bff; /* A trustworthy, vibrant blue */
+  --six-section-secondary-color: #17a2b8; /* A cool, intelligent teal */
+  --six-section-font: 'Poppins', sans-serif;
+}
+
+#six-home-section-info {
+  width: 100%;
+  padding: 120px 5%;
+  background-color: var(--six-section-bg-color);
+  overflow: hidden;
+  position: relative;
+}
+
+#six-home-section-info-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Give more space to the grid */
+  align-items: center;
+  gap: 80px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* --- Left Column: Interactive Visuals --- */
+#six-home-section-info-visuals {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 500px;
+  /* NEW: Use CSS variables for parallax from JS */
+  --x: 0px; 
+  --y: 0px;
+}
+.six-home-section-info-shape {
+  position: absolute;
+  border-radius: 16px;
+  transition: transform 0.3s ease-out; /* Smooths the parallax movement */
+}
+.six-home-section-info-shape1 {
+  width: 150px; height: 150px;
+  background: linear-gradient(45deg, var(--six-section-primary-color), var(--six-section-secondary-color));
+  opacity: 0.1; top: 10%; left: 5%;
+  transform: translate(calc(var(--x) * 0.5), calc(var(--y) * 0.5));
+}
+.six-home-section-info-shape2 {
+  width: 80px; height: 80px;
+  border: 2px solid var(--six-section-primary-color);
+  opacity: 0.3; bottom: 15%; right: 10%;
+  transform: translate(calc(var(--x) * 0.8), calc(var(--y) * 0.8)) rotate(45deg);
+}
+.six-home-section-info-shape3 {
+  width: 250px; height: 250px;
+  background: var(--six-section-secondary-color);
+  opacity: 0.05; top: 50%; left: 50%;
+  transform: translate(calc(-50% + var(--x) * 0.3), calc(-50% + var(--y) * 0.3));
+}
+.six-home-section-info-main-graphic {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px; height: 120px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
+  transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)));
+}
+.six-home-section-info-main-graphic svg {
+  width: 50%; height: 50%;
+  color: var(--six-section-primary-color);
+}
+#six-home-section-info-main-heading {
+  font-family: var(--six-section-font);
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--six-section-text-color);
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 2;
+  /* For entry animation */
+  opacity: 0;
+  animation: fadeIn 1s 0.5s forwards;
+}
+#six-home-section-info-main-description {
+  font-family: var(--six-section-font);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #6c757d; /* Softer gray text */
+  position: relative;
+  z-index: 2;
+  /* For entry animation */
+  opacity: 0;
+  animation: fadeIn 1s 0.7s forwards;
+}
+
+/* --- Right Column: Feature Grid --- */
+#six-home-section-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+.six-home-section-info-feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(50px);
+  animation: cardFadeIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation-delay: calc(0.1s * var(--delay) + 0.5s);
+}
+/* NEW: "Glow on Hover" effect */
+.six-home-section-info-feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.1);
+  border-color: var(--six-section-primary-color);
+}
+.six-home-section-info-icon-wrapper {
+  width: 50px; height: 50px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--six-section-primary-color);
+  color: white;
+  transition: background-color 0.4s ease;
+}
+.six-home-section-info-feature-card:hover .six-home-section-info-icon-wrapper {
+  background-color: var(--six-section-secondary-color);
+}
+.six-home-section-info-icon-wrapper svg {
+  width: 24px; height: 24px;
+}
+.six-home-section-info-feature-title {
+  font-family: var(--six-section-font);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--six-section-text-color);
+}
+.six-home-section-info-feature-description {
+  font-family: var(--six-section-font);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #6c757d;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+@keyframes cardFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1200px) {
+  #six-home-section-info-container {
+    grid-template-columns: 1fr;
+    gap: 0; /* Remove gap for cleaner stacking */
+  }
+  #six-home-section-info-visuals {
+    text-align: center;
+    padding: 0 0 60px 0;
+    min-height: auto;
+  }
+  .six-home-section-info-main-graphic { display: none; } /* Hide for cleaner mobile look */
+  .six-home-section-info-shape { display: none; } /* Hide shapes on smaller screens */
+  #six-home-section-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #six-home-section-info { padding: 80px 5%; }
+  #six-home-section-info-main-heading { font-size: 2.5rem; }
+  #six-home-section-info-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+}
